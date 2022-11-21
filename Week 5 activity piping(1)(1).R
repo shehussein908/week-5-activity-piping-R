@@ -25,16 +25,39 @@ download.file(url = "https://raw.githubusercontent.com/fivethirtyeight/data/mast
 airline_safety<- read.csv("airline_safety.csv")
 
 #TASK: take a look at the airline safety data. 
+#Now let's take a look at some first 10 rows
+import pandas as pd
+import numpy as np
+df = pd.read_csv('airline_safety.csv')
+
+# Print first 10 rows
+df.head(10)
+
+#Now let's take a look at some 10 last rows
+import pandas as pd
+import numpy as np
+df = pd.read_csv('airline_safety.csv')
+
+# Print last 10 rows
+df.head(10)
 
 
 #TASK: Install and call the dplyr package. 
+# Install the dplyr package
+install.packages("dplyr")
+
+# Load the dplyr package
+library(dplyr)
 
 
 #Let's make a random sample of our data and save it
 mysample<-sample_n(airline_safety, size=15, replace = FALSE, weight = NULL, .env = NULL)
 
 #TASK: Save the new sample as a csv file
+airline_safety
 
+airline_safety.to_csv('airline_safety.csv', index=False)
+ 
 
 #Now let's have some fun with *piping*
 
@@ -60,3 +83,11 @@ mysample3<-select(mysample2, incidents_00_14, incidents_85_99)
 mysample4<-summary(mysample3)
 print(mysample4)
 
+#answer
+mysample2%>%
+  arrange(airline)%>%
+  filter(incidents_85_99<25)%>%
+  rename(seats = avail_seat_km_per_week)%>%
+  select(incidents_00_14, incidents_85_99)%>%
+  summary()%>%
+  print()
